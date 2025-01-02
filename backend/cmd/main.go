@@ -30,14 +30,17 @@ func main() {
 
 	repositories := repository.Repository{
 		Transaction: repository.NewTransactionRepository(db),
+		Category:    repository.NewCategoryRepository(db),
 	}
 
 	services := service.Service{
 		Transaction: service.NewTransactionService(repositories),
+		Category:    service.NewCategoryService(repositories),
 	}
 
 	_ = handler.Handler{
 		Transaction: handler.NewTransactionHandler(app, services),
+		Category:    handler.NewCategoryHandler(app, services),
 	}
 
 	app.Get("/healthz", func(ctx *fiber.Ctx) error {
