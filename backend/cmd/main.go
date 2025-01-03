@@ -12,10 +12,12 @@ import (
 	"github.com/arganaphang/wallet/backend/internal/handler"
 	"github.com/arganaphang/wallet/backend/internal/repository"
 	"github.com/arganaphang/wallet/backend/internal/service"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
 	app := fiber.New()
+	app.Use(cors.New())
 
 	db, err := sqlx.Open(
 		"postgres",
@@ -24,8 +26,8 @@ func main() {
 	if err != nil {
 		log.Fatalln("failed to open database connection", err.Error())
 	}
-	if db.Ping() != nil {
-		log.Fatalln("failed to ping database")
+	if err := db.Ping(); err != nil {
+		log.Fatalln("failed to ping database", err.Error())
 	}
 
 	repositories := repository.Repository{
