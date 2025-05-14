@@ -1,9 +1,11 @@
 basePath: /
 definitions:
-  main.HealthzResponse:
+  dto.HealthzResponse:
     properties:
       message:
         type: string
+      success:
+        type: boolean
     type: object
 host: localhost:8000
 info:
@@ -27,5 +29,5 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.HealthzResponse'
+            $ref: '#/definitions/dto.HealthzResponse'
 swagger: "2.0"

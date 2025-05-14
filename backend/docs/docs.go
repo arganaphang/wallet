@@ -33,7 +33,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.HealthzResponse"
+                            "$ref": "#/definitions/dto.HealthzResponse"
                         }
                     }
                 }
@@ -41,11 +41,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.HealthzResponse": {
+        "dto.HealthzResponse": {
             "type": "object",
             "properties": {
                 "message": {
                     "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
                 }
             }
         }

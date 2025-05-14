@@ -12,6 +12,7 @@ import (
 	_ "github.com/lib/pq"
 
 	_ "github.com/arganaphang/wallet/backend/docs"
+	"github.com/arganaphang/wallet/backend/internal/dto"
 	"github.com/arganaphang/wallet/backend/internal/handler"
 	"github.com/arganaphang/wallet/backend/internal/repository"
 	"github.com/arganaphang/wallet/backend/internal/service"
@@ -70,10 +71,10 @@ type HealthzResponse struct {
 // @Description Health Check
 // @ID healthz
 // @Produce json
-// @Success 200 {object} HealthzResponse "OK"
+// @Success 200 {object} dto.HealthzResponse "OK"
 // @Router /healthz [get]
 func getHealthz(c *fiber.Ctx) error {
-	return c.Status(http.StatusOK).JSON(HealthzResponse{
+	return c.Status(http.StatusOK).JSON(dto.HealthzResponse{
 		Message: "OK",
 	})
 }
