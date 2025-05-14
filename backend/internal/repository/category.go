@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/arganaphang/wallet/backend/internal/entity"
 	goqu "github.com/doug-martin/goqu/v9"
 	"github.com/jmoiron/sqlx"
+
+	"github.com/arganaphang/wallet/backend/internal/entity"
 )
 
 type ICategoryRepository interface {

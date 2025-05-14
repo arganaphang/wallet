@@ -3,10 +3,11 @@ package handler
 import (
 	"net/http"
 
+	fiber "github.com/gofiber/fiber/v2"
+	"github.com/sirupsen/logrus"
+
 	"github.com/arganaphang/wallet/backend/internal/dto"
 	"github.com/arganaphang/wallet/backend/internal/service"
-	"github.com/gofiber/fiber/v2"
-	"github.com/sirupsen/logrus"
 )
 
 type ICategoryHandler interface {

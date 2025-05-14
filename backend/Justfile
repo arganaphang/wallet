@@ -4,8 +4,12 @@ format:
 	goimports-reviser -rm-unused -set-alias ./...
 	golines -w -m 120 .
 
+# docs -> generate api documentation
+docs:
+	swag init --parseDependency --parseInternal --output ./docs --dir ./cmd
+
 # build -> build application
-build:
+build: format
 	go build -o main ./cmd
 
 # run -> application
