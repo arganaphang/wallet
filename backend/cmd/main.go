@@ -7,7 +7,6 @@ import (
 
 	fiber "github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/swagger"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
@@ -16,6 +15,7 @@ import (
 	"github.com/arganaphang/wallet/backend/internal/handler"
 	"github.com/arganaphang/wallet/backend/internal/repository"
 	"github.com/arganaphang/wallet/backend/internal/service"
+	"github.com/arganaphang/wallet/backend/pkg/scalar"
 )
 
 // @title Wallet API
@@ -30,6 +30,24 @@ import (
 func main() {
 	app := fiber.New()
 	app.Use(cors.New())
+
+	app.Get("/healthz", getHealthz)
+	app.Get("/docs", func(ctx *fiber.Ctx) error {
+		htmlContent, err := scalar.ApiReferenceHTML(&scalar.Options{
+			SpecURL: "./docs/swagger.json",
+			CustomOptions: scalar.CustomOptions{
+				PageTitle: "Bookshelf API",
+			},
+			DarkMode: true,
+		})
+		if err != nil {
+			return ctx.Status(http.StatusInternalServerError).JSON(map[string]any{})
+		}
+
+		ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+
+		return ctx.Status(http.StatusOK).SendString(htmlContent)
+	})
 
 	db, err := sqlx.Open(
 		"postgres",
@@ -56,8 +74,6 @@ func main() {
 		Transaction: handler.NewTransactionHandler(app, services),
 		Category:    handler.NewCategoryHandler(app, services),
 	}
-	app.Get("/healthz", getHealthz)
-	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	if err := app.Listen("0.0.0.0:8000"); err != nil {
 		log.Fatalln(err)
@@ -68,13 +84,16 @@ type HealthzResponse struct {
 	Message string `json:"message"`
 }
 
+// @Summary Health
 // @Description Health Check
 // @ID healthz
+// @Tags Health
 // @Produce json
-// @Success 200 {object} dto.HealthzResponse "OK"
+// @Success 200 {object} HealthzResponse "OK"
 // @Router /healthz [get]
 func getHealthz(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(dto.HealthzResponse{
+		Success: true,
 		Message: "OK",
 	})
 }

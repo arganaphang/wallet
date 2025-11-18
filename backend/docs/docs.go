@@ -22,18 +22,83 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/categories": {
+            "get": {
+                "description": "Get All Category",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get All",
+                "operationId": "category-get-all",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CategoryGetAllResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Category",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create",
+                "operationId": "category-create",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CategoryAddResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/categories/:id": {
+            "delete": {
+                "description": "Delete category by id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete by ID",
+                "operationId": "category-delete-by-id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CategoryDeleteByIDResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/healthz": {
             "get": {
                 "description": "Health Check",
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Health",
                 "operationId": "healthz",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthzResponse"
+                            "$ref": "#/definitions/main.HealthzResponse"
                         }
                     }
                 }
@@ -41,7 +106,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.HealthzResponse": {
+        "dto.CategoryAddResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -49,6 +114,50 @@ const docTemplate = `{
                 },
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "dto.CategoryDeleteByIDResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dto.CategoryGetAllResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Category"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "entity.Category": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.HealthzResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
                 }
             }
         }

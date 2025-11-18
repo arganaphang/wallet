@@ -1,11 +1,39 @@
 basePath: /
 definitions:
-  dto.HealthzResponse:
+  dto.CategoryAddResponse:
     properties:
       message:
         type: string
       success:
         type: boolean
+    type: object
+  dto.CategoryDeleteByIDResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  dto.CategoryGetAllResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Category'
+        type: array
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  entity.Category:
+    properties:
+      name:
+        type: string
+    type: object
+  main.HealthzResponse:
+    properties:
+      message:
+        type: string
     type: object
 host: localhost:8000
 info:
@@ -19,6 +47,47 @@ info:
   title: Wallet API
   version: "1.0"
 paths:
+  /api/v1/categories:
+    get:
+      description: Get All Category
+      operationId: category-get-all
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CategoryGetAllResponse'
+      summary: Get All
+      tags:
+      - Category
+    post:
+      description: Create Category
+      operationId: category-create
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CategoryAddResponse'
+      summary: Create
+      tags:
+      - Category
+  /api/v1/categories/:id:
+    delete:
+      description: Delete category by id
+      operationId: category-delete-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CategoryDeleteByIDResponse'
+      summary: Delete by ID
+      tags:
+      - Category
   /healthz:
     get:
       description: Health Check
@@ -29,5 +98,8 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.HealthzResponse'
+            $ref: '#/definitions/main.HealthzResponse'
+      summary: Health
+      tags:
+      - Health
 swagger: "2.0"

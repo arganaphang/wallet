@@ -10,7 +10,6 @@ require (
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/swaggo/swag v1.16.4
-	github.com/gofiber/swagger v1.1.1
 )
 
 require (
@@ -31,7 +30,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
-	github.com/swaggo/files/v2 v2.0.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect

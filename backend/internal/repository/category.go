@@ -6,12 +6,14 @@ import (
 
 	goqu "github.com/doug-martin/goqu/v9"
 	"github.com/jmoiron/sqlx"
+	ulid "github.com/oklog/ulid/v2"
 
 	"github.com/arganaphang/wallet/backend/internal/entity"
 )
 
 type ICategoryRepository interface {
 	Add(ctx context.Context, name string) error
+	DeleteByID(ctx context.Context, id ulid.ULID) error
 	GetAll(ctx context.Context, query string) ([]entity.Category, error)
 }
 
@@ -33,6 +35,20 @@ func (c *categoryRepository) Add(ctx context.Context, name string) error {
 		Vals(goqu.Vals{
 			name,
 		}).
+		ToSQL()
+	if err != nil {
+		return err
+	}
+
+	_, err = c.DB.Exec(sql)
+	return err
+}
+
+// DeleteByID implements ICategoryRepository.
+func (c *categoryRepository) DeleteByID(ctx context.Context, id ulid.ULID) error {
+	sql, _, err := goqu.
+		Delete(entity.TABLE_CATEGORIES).
+		Where(goqu.C("id").Eq(id.String())).
 		ToSQL()
 	if err != nil {
 		return err

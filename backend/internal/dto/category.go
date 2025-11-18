@@ -11,6 +11,11 @@ type CategoryAddResponse struct {
 	Message string `json:"message"`
 }
 
+type CategoryDeleteByIDResponse struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}
+
 type CategoryGetAllResponse struct {
 	Success bool              `json:"success"`
 	Message string            `json:"message"`

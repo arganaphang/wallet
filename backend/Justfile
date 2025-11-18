@@ -6,7 +6,7 @@ format:
 
 # docs -> generate api documentation
 docs:
-	swag init --parseDependency --parseInternal --output ./docs --dir ./cmd
+	swag init --parseDependency --parseInternal --output ./docs --dir ./cmd,./internal/handler
 
 # build -> build application
 build: format
